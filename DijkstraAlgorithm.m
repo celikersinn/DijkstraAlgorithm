@@ -18,6 +18,11 @@ s=[1 1 1 2 3 4 4 4 5 5 5 6 6 6 7 8 8 8 9 9];
 t=[2 4 5 3 2 4 5 7 2 6 8 2 3 8 8 4 6 7 6 8];
 weights = [10 2 1 -3 4 4 0 6 8 7 1 2 8 1 2 -9 2 5 7 6];
 
+% Check for negative weights
+if any(weights < 0)
+    error('The graph contains negative weights. Dijkstra''s algorithm cannot handle negative weights. Consider using the Bellman-Ford algorithm instead.');
+end
+
 % Create a sparse matrix for the grap
 a=sparse(s,t,weights,9,9);
 A=full(a); %Convert the sparse matrixx to full matrix form
@@ -82,7 +87,7 @@ while count < N-1
     % Update the distances to the neighboring nodes
     for k=1:N
         if visited(k) ==  0
-            if (mindist + cost(nextnode,k)) < dist(k) % alfabetik olmasý için küçük eþittir kullandýk. non-alfabetik için küçük iþareti kullanýrýz.
+            if (mindist + cost(nextnode,k)) < dist(k) % alfabetik olmasÃ½ iÃ§in kÃ¼Ã§Ã¼k eÃ¾ittir kullandÃ½k. non-alfabetik iÃ§in kÃ¼Ã§Ã¼k iÃ¾areti kullanÃ½rÃ½z.
                 dist(k)= mindist+ cost(nextnode,k);
                 pred(k)= nextnode; 
             end
